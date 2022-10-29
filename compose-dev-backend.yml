@@ -1,0 +1,35 @@
+version: '3.7'
+
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: webvirtcloud:dev
+    hostname: "backend"
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./webvirtbackend:/app
+    command: python3.8 manage.py runserver 0:8000
+    environment:
+      DB_HOST: mariadb
+      DB_PORT: 3306
+      DB_USER: root
+      DB_PASSWORD: root
+      PYTHONOPTIMIZE: 1
+      ANSIBLE_HOST_KEY_CHECKING: 0
+      ANSIBLE_PARAMIKO_LOOK_FOR_KEYS: 0
+      DJANGO_SETTINGS_MODULE: webvirtcloud.settings.develop
+    depends_on:
+      - mariadb
+  
+  mariadb:
+    image: mariadb:10.6.10
+    hostname: "mariadb"
+    volumes:
+      - ./.mysql:/var/lib/mysql
+    ports:
+      - "3306:3307"
+    environment:
+      MYSQL_ROOT_PASSWORD: root

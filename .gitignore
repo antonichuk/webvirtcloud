@@ -6,5 +6,4 @@
 .DS_*
 .mysql
 venv
-venv2
 package-lock.json

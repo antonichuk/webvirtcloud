@@ -1,0 +1,12 @@
+version: '3.7'
+
+services:
+  frontend:
+    image: node:lts-buster
+    hostname: "frontend"
+    ports:
+      - "3000:3000"
+    working_dir: /app
+    volumes:
+      - ./webvirtfrontend:/app
+    command: bash -c "npm ci && npm run start -- --host"

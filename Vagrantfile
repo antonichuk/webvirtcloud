@@ -31,6 +31,7 @@ Vagrant.configure("2") do |config|
       libvirt.memory = 8192
       libvirt.nested = true
       libvirt.machine_virtual_size = 256
+      libvirt.qemu_use_session = false
     end
 
     # node.vm.provision "shell", inline: <<-SHELL

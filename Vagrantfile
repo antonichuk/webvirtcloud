@@ -11,19 +11,25 @@ Vagrant.configure("2") do |config|
     node.vm.synced_folder ".", "/vagrant", type: "nfs"
     
     node.vm.network "private_network", 
-      ip: "172.64.0.254", 
+      ip: "172.64.0.255", 
       netmask: "255.255.255.0",
-      auto_config: false
+      auto_config: false,
+      libvirt__dhcp_enabled: false,
+      libvirt__network_name: "wvc-mgmt"
     
     node.vm.network "private_network", 
-      ip: "192.168.33.254", 
+      ip: "192.168.33.255", 
       netmaks: "255.255.255.0", 
-      auto_config: false
+      auto_config: false,
+      libvirt__dhcp_enabled: false,
+      libvirt__network_name: "wvc-pub"
         
     node.vm.network "private_network", 
-      ip: "10.132.255.254", 
+      ip: "10.132.0.255", 
       netmaks: "255.255.0.0",
-      auto_config: false
+      auto_config: false,
+      libvirt__dhcp_enabled: false,
+      libvirt__network_name: "wvc-priv"
         
     node.vm.provider :libvirt do |libvirt|
       libvirt.cpus = 6
@@ -34,11 +40,11 @@ Vagrant.configure("2") do |config|
       libvirt.qemu_use_session = false
     end
 
-    # node.vm.provision "shell", inline: <<-SHELL
-    #   dnf install -y cloud-utils-growpart
-    #   growpart /dev/vda 1
-    #   xfs_growfs /dev/vda1
-    # SHELL
+    node.vm.provision "shell", run: "once", inline: <<-SHELL
+      dnf install -y cloud-utils-growpart
+      growpart /dev/vda 1
+      xfs_growfs /dev/vda1
+    SHELL
   
   end
 end

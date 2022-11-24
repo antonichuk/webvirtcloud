@@ -4,14 +4,14 @@
 Vagrant.configure("2") do |config|
   config.ssh.insert_key = false
   
-  config.vm.define :server do |node|
+  config.vm.define "compute" do |node|
     node.vm.box = "rockylinux/8"
     node.vm.box_version = "5.0.0"
-    node.vm.hostname = "wvc-dev-node"
+    node.vm.hostname = "wvc-compute"
     node.vm.synced_folder ".", "/vagrant", type: "nfs"
     
     node.vm.network "private_network", 
-      ip: "172.64.0.255", 
+      ip: "172.64.0.255",
       netmask: "255.255.255.0",
       auto_config: false,
       libvirt__dhcp_enabled: false,
@@ -40,11 +40,15 @@ Vagrant.configure("2") do |config|
       libvirt.qemu_use_session = false
     end
 
-    node.vm.provision "shell", run: "once", inline: <<-SHELL
+    node.vm.provision "shell", inline: <<-SHELL
       dnf install -y cloud-utils-growpart
       growpart /dev/vda 1
       xfs_growfs /dev/vda1
     SHELL
   
+    node.vm.provision "ansible" do |ansible|
+      ansible.playbook = "ansible/compute/playbook.yml"
+    end
+
   end
 end

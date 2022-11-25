@@ -22,6 +22,7 @@
            xmlstarlet,
            python3-lxml,
            python3-libvirt,
+           python3-libguestfs,
            cyrus-sasl-md5, 
            qemu-guest-agent, 
            libguestfs-tools, 

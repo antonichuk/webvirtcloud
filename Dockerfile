@@ -1,19 +1,13 @@
-FROM quay.io/centos/centos:stream8
+FROM rockylinux:8
 ENV LANG=en_US.UTF-8
 
 WORKDIR /app
 
 RUN dnf -y install epel-release \
-    && dnf -y install gcc \
-        make \
-        cairo \
-        pango \
+    && dnf -y install \
         python38 \
         python38-devel \
-        libffi-devel \
-        libvirt-devel \
-        cyrus-sasl-md5 \
-        glibc-langpack-en \
+        glibc-langpack-all \
         mariadb-connector-c-devel \
     && dnf clean all
 
@@ -27,4 +21,4 @@ RUN rm -rf production.txt develop.txt
 
 VOLUME /app
 
-EXPOSE 8000 6080
+EXPOSE 8000

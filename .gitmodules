@@ -4,3 +4,6 @@
 [submodule "webvirtfrontend"]
 	path = webvirtfrontend
 	url = git@github.com:retspen/webvirtfrontend.git
+[submodule "hostvirtmgr"]
+	path = hostvirtmgr
+	url = git@github.com:retspen/hostvirtmgr.git

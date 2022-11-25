@@ -21,7 +21,6 @@
       python3-lxml,
       python3-libvirt,
       python3-paramiko,
-      python3-requests,
       python3-libguestfs,
       python3-websockify,
       libvirt,

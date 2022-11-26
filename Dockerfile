@@ -4,10 +4,10 @@ ENV LANG=en_US.UTF-8
 WORKDIR /app
 
 RUN dnf -y install epel-release \
-    && dnf -y install \
+    && dnf -y install gcc \
         python38 \
         python38-devel \
-        glibc-langpack-all \
+        glibc-langpack-en \
         mariadb-connector-c-devel \
     && dnf clean all
 
